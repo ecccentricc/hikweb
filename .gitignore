@@ -1,0 +1,13 @@
+# Your settings – contain device and user passwords. NEVER commit these.
+config.json
+config/
+*.tmp
+
+
+# Runtime / build artefacts
+node_modules/
+*.log
+*.zip
+.DS_Store
+public/vendor/
+publish-to-github.sh

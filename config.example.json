@@ -1,0 +1,42 @@
+{
+  "port": 8080,
+  "bind": "0.0.0.0",
+  "siteName": "",
+  "language": "auto",
+  "theme": "dark",
+  "users": [
+    { "username": "admin", "password": "CHANGE-ME", "role": "admin" }
+  ],
+  "devices": [
+    {
+      "id": "nvr1",
+      "name": "NVR",
+      "type": "nvr",
+      "host": "192.168.1.64",
+      "httpPort": 80,
+      "rtspPort": 554,
+      "username": "viewer",
+      "password": "nvr-password",
+      "video": "copy"
+    },
+    {
+      "id": "yard",
+      "name": "Yard camera",
+      "type": "camera",
+      "host": "192.168.1.65",
+      "username": "viewer",
+      "password": "camera-password",
+      "video": "copy"
+    }
+  ],
+  "sessionHours": 12,
+  "idleLogoutMinutes": 0,
+  "idleSeconds": 30,
+  "maxStreams": 16,
+  "maxDownloadMinutes": 120,
+  "fastDownload": true,
+  "thumbnails": true,
+  "webrtc": false,
+  "go2rtcUrl": "http://127.0.0.1:1984",
+  "secureCookies": false
+}

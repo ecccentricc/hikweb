@@ -1,0 +1,18 @@
+# HikWeb + go2rtc (WebRTC). Abu konteineriai naudoja serverio tinklą (network_mode: host),
+# todėl HikWeb pasiekia go2rtc adresu http://127.0.0.1:1984, o naršyklės – WebRTC prievadą 8556.
+services:
+  hikweb:
+    build: .
+    restart: unless-stopped
+    network_mode: host
+    volumes:
+      - ./config:/app/config
+    tmpfs:
+      - /tmp
+
+  go2rtc:
+    image: alexxit/go2rtc
+    restart: unless-stopped
+    network_mode: host
+    volumes:
+      - ./go2rtc.yaml:/config/go2rtc.yaml:ro

@@ -1,0 +1,9 @@
+# go2rtc nustatymai (Docker variantui). Srautus HikWeb užregistruoja pats.
+api:
+  listen: "127.0.0.1:1984"
+rtsp:
+  listen: ""
+webrtc:
+  listen: ":8556"
+log:
+  level: warn

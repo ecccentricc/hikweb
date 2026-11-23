@@ -1,0 +1,6 @@
+config.json
+config/
+.git/
+docs/
+*.zip
+node_modules/

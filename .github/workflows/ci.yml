@@ -1,0 +1,25 @@
+name: CI
+on: [push, pull_request]
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node: [18, 20, 22]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node }}
+      - name: Syntax check
+        run: |
+          node --check server.js
+          for f in public/*.js; do node --check "$f"; done
+      - name: Shell scripts
+        run: bash -n install.sh && bash -n install-go2rtc.sh
+      - name: Server starts
+        run: |
+          cp config.example.json config.json
+          timeout 5 node server.js > out.log 2>&1 || true
+          cat out.log
+          grep -q "veikia" out.log

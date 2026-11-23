@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="lt">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>HikWeb</title>
+<script src="theme.js"></script>
+<link rel="stylesheet" href="style.css">
+<link rel="icon" type="image/png" href="favicon.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="theme-color" content="#0f1115">
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="apple-mobile-web-app-title" content="HikWeb">
+</head>
+<body>
+
+<!-- Prisijungimas -->
+<div id="login" class="login hidden">
+  <form id="loginForm" class="login-box">
+    <div class="login-top"><button type="button" id="themeBtnLogin" class="ghost theme-cycle"></button><select class="lang-sel" aria-label="Language"></select></div>
+    <div class="login-logo">
+      <img src="logo-mark.png" alt="">
+      <h1 class="wordmark">Hik<span>WEB</span></h1>
+      <p class="site-name hidden"></p>
+      <p class="muted" data-i18n="app.subtitle"></p>
+    </div>
+    <input name="username" data-i18n-placeholder="login.user" autocomplete="username" required>
+    <input name="password" type="password" data-i18n-placeholder="login.pass" autocomplete="current-password" required>
+    <button type="submit" data-i18n="login.submit"></button>
+    <div id="loginErr" class="err"></div>
+  </form>
+</div>
+
+<!-- Programa -->
+<div id="app" class="app hidden">
+  <header>
+    <button id="menuBtn" class="icon-btn" data-i18n-title="side.cameras" aria-label="Menu">
+      <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+    </button>
+    <div class="brand"><img src="logo-mark.png" alt=""><span class="wordmark">Hik<span>WEB</span></span><span class="site-name hdr hidden"></span></div>
+    <nav class="tabs">
+      <button data-tab="live" class="active">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="14" height="12" rx="2"/><path d="M16 10l6-3v10l-6-3z"/></svg>
+        <span data-i18n="tab.live"></span></button>
+      <button data-tab="rec">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5"/><path d="M12 7v5l3 2"/></svg>
+        <span data-i18n="tab.rec"></span></button>
+      <button data-tab="set">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg>
+        <span data-i18n="tab.set"></span></button>
+    </nav>
+    <div class="spacer"></div>
+    <button id="alertBtn" class="ghost alert-btn hidden">⚠</button>
+    <button id="moreBtn" class="icon-btn more-btn" aria-label="More">
+      <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><circle cx="5" cy="12" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="19" cy="12" r="2"/></svg>
+    </button>
+    <div id="hdrTools" class="hdr-tools">
+      <div class="tool-row tool-user"><span id="whoami" class="muted small"></span></div>
+      <div class="tool-row tool-layout"><span class="menu-label" data-i18n="grid"></span>
+        <div id="layoutSel" class="seg">
+          <button data-l="1">1</button><button data-l="4" class="active">4</button><button data-l="9">9</button><button data-l="16">16</button>
+        </div>
+      </div>
+      <div class="tool-row"><span class="menu-label" data-i18n="theme"></span><button id="themeBtn" class="ghost"></button></div>
+      <div class="tool-row"><span class="menu-label" data-i18n="language"></span><select class="lang-sel small-sel" data-i18n-title="language"></select></div>
+      <button id="logoutBtn" class="ghost" data-i18n="logout"></button>
+    </div>
+  </header>
+  <div id="drawerBg" class="drawer-bg"></div>
+
+  <div class="body">
+    <aside id="sidebar">
+      <div class="side-title" data-i18n="side.devices"></div>
+      <div id="deviceList"><div class="muted pad">…</div></div>
+    </aside>
+
+    <main>
+      <!-- Tiesioginis vaizdas -->
+      <section id="tab-live" class="tab">
+        <div id="grid" class="grid l4"></div>
+        <div class="hint muted" data-i18n="live.hint"></div>
+      </section>
+
+      <!-- Įrašai -->
+      <section id="tab-rec" class="tab hidden">
+        <div class="rec-bar">
+          <select id="recCam"></select>
+          <div id="extraCams" class="cam-chips"></div>
+          <select id="addCam" class="add-cam"></select>
+          <span class="bar-gap"></span>
+          <button id="dPrev" class="ghost">‹</button>
+          <input type="date" id="recDate">
+          <button id="dNext" class="ghost">›</button>
+          <button id="recSearch" data-i18n="rec.search"></button>
+        </div>
+        <div class="rec-bar2">
+          <div id="typeFilter" class="filters">
+            <button data-f="motion" class="on"><i class="dot motion"></i><span data-i18n="flt.motion"></span> <b></b></button>
+            <button data-f="continuous" class="on"><i class="dot continuous"></i><span data-i18n="flt.continuous"></span> <b></b></button>
+            <button data-f="alarm" class="on"><i class="dot alarm"></i><span data-i18n="flt.alarm"></span> <b></b></button>
+          </div>
+          <span id="recStatus" class="muted"></span>
+        </div>
+
+        <div id="pbWrap" class="pb-wrap">
+          <div id="pbGrid" class="pb-grid n1"></div>
+          <div id="pbClock" class="clock"></div>
+        </div>
+
+        <div class="timeline-wrap">
+          <div id="timeline" class="timeline">
+            <div id="tlLanes" class="tl-lanes"></div>
+            <div id="tlCursor" class="tl-cursor hidden"></div>
+            <div id="tlHover" class="tl-hover hidden"></div>
+            <div id="tlThumb" class="tl-thumb hidden"><img alt=""><span></span></div>
+          </div>
+          <div class="tl-hours" id="tlHours"></div>
+        </div>
+
+        <div class="dl-box">
+          <strong data-i18n="rec.dlTitle"></strong>
+          <input type="time" id="dlFrom" step="1"> –
+          <input type="time" id="dlTo" step="1">
+          <button id="dlBtn" data-i18n="rec.dlBtn"></button>
+          <span class="muted small" data-i18n="rec.dlNote"></span>
+        </div>
+
+        <table class="seg-table">
+          <thead><tr><th data-i18n="rec.start"></th><th data-i18n="rec.end"></th><th data-i18n="rec.dur"></th><th data-i18n="rec.type"></th><th></th></tr></thead>
+          <tbody id="segList"></tbody>
+        </table>
+      </section>
+
+      <!-- Nustatymai -->
+      <section id="tab-set" class="tab hidden">
+        <div class="admin-only card">
+          <div class="card-head"><h2 data-i18n="set.devices"></h2><button id="addDev" data-i18n="set.addDevice"></button></div>
+          <table class="list dev-list"><thead><tr>
+            <th data-i18n="set.th.name"></th><th data-i18n="set.th.type"></th><th data-i18n="set.th.address"></th>
+            <th data-i18n="set.th.user"></th><th data-i18n="set.th.video"></th><th></th></tr></thead>
+          <tbody id="devTable"></tbody></table>
+        </div>
+
+        <div class="admin-only card">
+          <div class="card-head"><h2 data-i18n="set.users"></h2><button id="addUser" data-i18n="set.addUser"></button></div>
+          <table class="list"><thead><tr>
+            <th data-i18n="set.th.username"></th><th data-i18n="set.th.role"></th><th data-i18n="set.th.sees"></th><th></th></tr></thead>
+          <tbody id="userTable"></tbody></table>
+        </div>
+
+        <div class="admin-only card" id="diskCard">
+          <div class="card-head"><h2 data-i18n="disk.title"></h2><button id="diskRefresh" class="ghost" data-i18n="disk.refresh"></button></div>
+          <div id="diskInfo" class="muted">…</div>
+        </div>
+
+        <div class="admin-only card" id="repCard">
+          <div class="card-head"><h2 data-i18n="rep.title"></h2></div>
+          <form id="repForm" class="sys-grid">
+            <label class="check wide"><input type="checkbox" name="enabled"> <span data-i18n="rep.enabled"></span></label>
+            <label><span data-i18n="rep.time"></span><input type="time" name="time" required></label>
+            <label class="check"><input type="checkbox" name="onlyProblems"> <span data-i18n="rep.onlyProblems"></span></label>
+            <label class="wide"><span data-i18n="rep.tgToken"></span><input name="telegramToken" type="password" autocomplete="off" placeholder="123456789:AA…"></label>
+            <label><span data-i18n="rep.tgChat"></span><input name="telegramChat" autocomplete="off" placeholder="123456789"></label>
+            <small class="wide muted" data-i18n="rep.tgHint"></small>
+            <label class="wide"><span data-i18n="rep.webhook"></span><input name="webhookUrl" placeholder="http://homeassistant.local:8123/api/webhook/hikweb"></label>
+            <small class="wide muted" data-i18n="rep.webhookHint"></small>
+            <div class="wide sys-btns">
+              <button type="submit" data-i18n="save"></button>
+              <button type="button" id="repPreview" class="ghost" data-i18n="rep.preview"></button>
+              <button type="button" id="repSend" class="ghost" data-i18n="rep.sendNow"></button>
+              <span id="repMsg" class="small"></span>
+            </div>
+          </form>
+          <pre id="repOut" class="rep-out hidden"></pre>
+        </div>
+
+        <div class="admin-only card">
+          <div class="card-head"><h2 data-i18n="sys.title"></h2></div>
+          <form id="sysForm" class="sys-grid">
+            <label class="wide"><span data-i18n="sys.siteName"></span><input name="siteName" maxlength="60" data-i18n-placeholder="sys.siteNamePh"></label>
+            <label><span data-i18n="sys.port"></span><input name="port" type="number" min="1" max="65535" required><small data-i18n="sys.portHint"></small></label>
+            <label><span data-i18n="sys.bind"></span><input name="bind" list="bindList" required><small data-i18n="sys.bindHint"></small></label>
+            <datalist id="bindList"><option value="0.0.0.0"><option value="127.0.0.1"><option value="::"></datalist>
+            <label><span data-i18n="sys.lang"></span><select name="language" id="sysLang"></select></label>
+            <label><span data-i18n="sys.theme"></span><select name="theme" id="sysTheme"></select></label>
+            <label><span data-i18n="sys.session"></span><input name="sessionHours" type="number" min="1" max="720" required></label>
+            <label><span data-i18n="sys.idleLogout"></span><input name="idleLogoutMinutes" type="number" min="0" max="1440" required><small data-i18n="sys.idleLogoutHint"></small></label>
+            <label><span data-i18n="sys.idle"></span><input name="idleSeconds" type="number" min="10" max="600" required></label>
+            <label><span data-i18n="sys.maxStreams"></span><input name="maxStreams" type="number" min="1" max="64" required></label>
+            <label><span data-i18n="sys.maxDl"></span><input name="maxDownloadMinutes" type="number" min="1" max="1440" required></label>
+            <label class="check wide"><input type="checkbox" name="webrtc"> <span data-i18n="sys.webrtc"></span></label>
+            <label class="wide"><span data-i18n="sys.g2rUrl"></span><input name="go2rtcUrl" placeholder="http://127.0.0.1:1984"><small data-i18n="sys.webrtcHint"></small></label>
+            <label class="check wide"><input type="checkbox" name="thumbnails"> <span data-i18n="sys.thumbs"></span></label>
+            <small class="wide muted" data-i18n="sys.thumbsHint"></small>
+            <label class="check wide"><input type="checkbox" name="fastDownload"> <span data-i18n="sys.fastDl"></span></label>
+            <small class="wide muted" data-i18n="sys.fastDlHint"></small>
+            <label class="check wide"><input type="checkbox" name="secureCookies"> <span data-i18n="sys.secure"></span></label>
+            <small class="wide muted" data-i18n="sys.secureHint"></small>
+            <div class="wide sys-btns"><button type="submit" data-i18n="save"></button><span id="sysMsg" class="small"></span></div>
+          </form>
+          <h3 data-i18n="sys.status"></h3>
+          <div id="sysInfo" class="sys-info"></div>
+          <button id="stopAllBtn" class="ghost" data-i18n="sys.stopAll"></button> <span id="stopMsg" class="small muted"></span>
+        </div>
+
+        <div class="card">
+          <h2 data-i18n="appearance"></h2>
+          <div class="appearance">
+            <label><span data-i18n="language"></span><select class="lang-sel"></select></label>
+            <label><span data-i18n="theme"></span><select class="theme-sel"></select></label>
+          </div>
+        </div>
+
+        <div class="card">
+          <h2 data-i18n="set.myPw"></h2>
+          <form id="pwForm" class="form-inline">
+            <input type="password" name="current" data-i18n-placeholder="pw.current" autocomplete="current-password" required>
+            <input type="password" name="password" data-i18n-placeholder="pw.new" autocomplete="new-password" minlength="6" required>
+            <input type="password" name="password2" data-i18n-placeholder="pw.repeat" autocomplete="new-password" required>
+            <button type="submit" data-i18n="pw.change"></button>
+            <span id="pwMsg" class="small"></span>
+          </form>
+        </div>
+      </section>
+    </main>
+  </div>
+</div>
+
+<!-- Įrenginio forma -->
+<dialog id="devDlg">
+  <form id="devForm" method="dialog" class="dlg">
+    <h2 id="devDlgTitle"></h2>
+    <input type="hidden" name="id">
+    <label><span data-i18n="dlg.name"></span><input name="name" required maxlength="80" data-i18n-placeholder="dlg.namePh"></label>
+    <label><span data-i18n="dlg.type"></span>
+      <select name="type"><option value="nvr" data-i18n="dlg.typeNvr"></option><option value="camera" data-i18n="dlg.typeCam"></option></select></label>
+    <div class="row">
+      <label class="grow"><span data-i18n="dlg.host"></span><input name="host" required placeholder="192.168.1.64"></label>
+      <label><span data-i18n="dlg.httpPort"></span><input name="httpPort" type="number" min="1" max="65535" placeholder="80"></label>
+      <label><span data-i18n="dlg.rtspPort"></span><input name="rtspPort" type="number" min="1" max="65535" placeholder="554"></label>
+    </div>
+    <div class="row">
+      <label class="grow"><span data-i18n="dlg.user"></span><input name="username" required autocomplete="off" placeholder="admin"></label>
+      <label class="grow"><span data-i18n="dlg.pass"></span><input name="password" type="password" autocomplete="new-password"></label>
+    </div>
+    <label><span data-i18n="dlg.codec"></span>
+      <select name="video">
+        <option value="copy" data-i18n="dlg.codecCopy"></option>
+        <option value="h265" data-i18n="dlg.codecH265"></option>
+        <option value="transcode" data-i18n="dlg.codecTranscode"></option>
+      </select></label>
+    <label class="check"><input type="checkbox" name="audio" checked> <span data-i18n="dlg.audio"></span></label>
+    <div id="devTest" class="small"></div>
+    <div class="dlg-btns">
+      <button type="button" id="devTestBtn" class="ghost" data-i18n="dlg.test"></button>
+      <span class="spacer"></span>
+      <button type="button" class="ghost" data-close data-i18n="cancel"></button>
+      <button type="submit" data-i18n="save"></button>
+    </div>
+  </form>
+</dialog>
+
+<!-- Vartotojo forma -->
+<dialog id="userDlg">
+  <form id="userForm" method="dialog" class="dlg">
+    <h2 id="userDlgTitle"></h2>
+    <input type="hidden" name="original">
+    <label><span data-i18n="dlg.username"></span><input name="username" required maxlength="40" autocomplete="off"></label>
+    <label><span data-i18n="dlg.pass"></span><input name="password" type="password" autocomplete="new-password" minlength="6"></label>
+    <label><span data-i18n="dlg.role"></span>
+      <select name="role">
+        <option value="viewer" data-i18n="dlg.roleViewer"></option>
+        <option value="admin" data-i18n="dlg.roleAdmin"></option>
+      </select></label>
+    <div id="userDevs">
+      <label class="check"><input type="checkbox" name="allDevices" checked> <span data-i18n="dlg.allDevices"></span></label>
+      <div id="userDevList" class="dev-checks"></div>
+    </div>
+    <label class="check"><input type="checkbox" name="noIdleLogout"> <span data-i18n="dlg.noIdle"></span></label>
+    <div id="userErr" class="err small"></div>
+    <div class="dlg-btns">
+      <span class="spacer"></span>
+      <button type="button" class="ghost" data-close data-i18n="cancel"></button>
+      <button type="submit" data-i18n="save"></button>
+    </div>
+  </form>
+</dialog>
+
+<!-- Neveiklumo įspėjimas -->
+<dialog id="idleDlg">
+  <div class="dlg">
+    <h2 data-i18n="idle.title"></h2>
+    <p id="idleText"></p>
+    <div class="dlg-btns"><span class="spacer"></span><button type="button" id="idleStay" data-i18n="idle.stay"></button></div>
+  </div>
+</dialog>
+
+<script src="i18n.js"></script>
+<script>applyI18n(); initLangSelects(); syncThemeControls();</script>
+<script src="vendor/hls.min.js" onerror="this.remove()"></script>
+<script>
+  if (!window.Hls) document.write('<script src="https://cdn.jsdelivr.net/npm/hls.js@1.5.20/dist/hls.min.js"><\/script>');
+</script>
+<script src="app.js"></script>
+<script>
+  // Programėlė telefone (PWA). Service worker veikia tik per HTTPS arba localhost.
+  if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost')) {
+    navigator.serviceWorker.register('sw.js').catch(() => {});
+  }
+</script>
+</body>
+</html>
